@@ -30,7 +30,7 @@ app.get("/users", authMiddleware, async (req, res) => {
   return res.status(200).json(users);
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/users/:id", authMiddleware, async (req, res) => {
   const id = req.params.id;
   const userServices = new UserService();
   const user = await userServices.findById(id);
@@ -38,7 +38,7 @@ app.get("/users/:id", async (req, res) => {
 });
 
 //C - CREATE
-app.post("/users", async (req, res) => {
+app.post("/users", authMiddleware, async (req, res) => {
   const { name, email, password } = req.body;
   const userServices = new UserService();
   await userServices.add(name, email, password);
@@ -46,7 +46,7 @@ app.post("/users", async (req, res) => {
 });
 
 // U - UPDATE
-app.put("/users/:id", async (req, res) => {
+app.put("/users/:id", authMiddleware, async (req, res) => {
   const id = req.params.id;
   const { name } = req.body;
   const user = { name };
@@ -60,7 +60,7 @@ app.put("/users/:id", async (req, res) => {
 });
 
 //DELETE
-app.delete("/users/:id", async (req, res) => {
+app.delete("/users/:id", authMiddleware,async (req, res) => {
   const id = req.params.id;
   const userService = new UserService();
   try {
